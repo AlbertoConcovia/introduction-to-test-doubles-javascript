@@ -44,12 +44,13 @@ test('test successful bubble tea order request', () => {
   ).toHaveBeenCalledTimes(1);
 });
 
+
 test('test successful bubble tea order request - type validation', () => {
   // Arrange
   const bubbleTeaRequest = {
-    paymentDetails: dummyPaymentDetails,
-    bubbleTea: {
-      type: bubbleTeaType.OOLONGMILKTEA,
+    'paymentDetails': dummyPaymentDetails,
+    'bubbleTea': {
+      'type': bubbleTeaType.OOLONGMILKTEA,
     },
   };
 
