@@ -1,4 +1,4 @@
-# Activity 1
+# Activity 1 - Completed
 
 ## 🗺 Exploration
 
