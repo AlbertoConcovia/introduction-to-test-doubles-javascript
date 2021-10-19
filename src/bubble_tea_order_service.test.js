@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+/* eslint-disable guard-for-in */
 /* eslint-disable linebreak-style */
 const {createOrderRequest} = require('./bubble_tea_order_service');
 const bubbleTeaType = require('./bubble_tea_type');
@@ -22,58 +22,19 @@ afterEach(() => {
   jest.clearAllMocks();
 });
 
-test('test successful bubble tea order request', () => {
-  // Arrange
-  const bubbleTeaRequest = {
-    paymentDetails: dummyPaymentDetails,
-    bubbleTea: {
-      type: bubbleTeaType.MATCHAMILKTEA,
-    },
-  };
-
-  // Act
-  const orderRequest = createOrderRequest(bubbleTeaRequest);
-
-  // Assert
-  expect(orderRequest.name).toBe(dummyPaymentDetails.name);
-  expect(orderRequest.digits).toBe(dummyPaymentDetails.debitCard.digits);
-  expect(
-      bubbleTeaMessenger.sendBubbleTeaOrderRequestEmail,
-  ).toHaveBeenCalledWith(orderRequest);
-  expect(
-      bubbleTeaMessenger.sendBubbleTeaOrderRequestEmail,
-  ).toHaveBeenCalledTimes(1);
-});
-
-
-// const add = (a, b) => a + b;
-// const cases = [[2, 2, 4], [-2, -2, -4], [2, -2, 0]];
-// describe('Test.each - bubble_tea_order_service', () => {
-//   test.each(cases)(
-//       'given %p and %p as arguments, returns %p',
-//       (firstArg, secondArg, expectedResult) => {
-//         const result = add(firstArg, secondArg);
-//         expect(result).toEqual(expectedResult);
-//       },
-//   );
-// });
-
-const casesTeaType = [
-  'OOLONGMILKTEA',
-  'JASMINEMILKTEA',
-  'MATCHAMILKTEA',
-  'PEACHICETEA',
-  'LYCHEEICETEA',
-];
-
+const arrCasesTeaType = [];
 describe('Test.each successful bubble_tea_order_service', () => {
-  test.each(casesTeaType)(
-      `Given ${casesTeaType} type validation - then ${casesTeaType}`, () => {
-        // Arrange
+  for (const keyTeaType in bubbleTeaType) arrCasesTeaType.push(keyTeaType);
+
+  test.each(arrCasesTeaType)(
+      `Given %s then successful validation`,
+      (elementTeaType) => {
+      // Arrange
+        console.log(`elementTeaType ${elementTeaType}`);
         const bubbleTeaRequest = {
-          'paymentDetails': dummyPaymentDetails,
-          'bubbleTea': {
-            'type': casesTeaType,
+          paymentDetails: dummyPaymentDetails,
+          bubbleTea: {
+            type: elementTeaType,
           },
         };
 
@@ -90,5 +51,6 @@ describe('Test.each successful bubble_tea_order_service', () => {
         expect(
             bubbleTeaMessenger.sendBubbleTeaOrderRequestEmail,
         ).toHaveBeenCalledTimes(1);
-      });
+      },
+  );
 });
